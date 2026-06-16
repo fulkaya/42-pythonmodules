@@ -2,34 +2,70 @@ import sys
 
 
 def main() -> None:
-	print("=== Inventory System Analysis ===")
+    print("=== Inventory System Analysis ===")
 
-	inventory = {}
+    inventory = {}
 
-	for i in range(1, len(sys.argv)):
-		param = sys.argv[i]
-	
-	if ":" not in param: 
-		print(f"Error - invalid parameter '{param}'")
-		continue
+    for i in range(1, len(sys.argv)):
+        param = sys.argv[i]
 
-	parts = param.split(":")
-	item = parts[0].strip()
-	quantity_str = parts[1].strip()
+        if ":" not in param:
+            print(f"Error - invalid parameter '{param}'")
+            continue
 
-	if item in inventory:
-		print(f"Redundant item '{item}' - discarding")
-		continue
+        parts = param.split(":")
+        key = parts[0].strip()
+        quantity_str = parts[1].strip()
 
-	try:
-		quantity = int(quantity_str)
-		inventor[item] = quantity
-	except ValueError as e:
-		print(f"Quantity error for '{item}': {e}")
-	
-	if len(inventory) == 0:
-		return
-	
-	print(f"Got inventory: {inventory}")
+        if key in inventory:
+            print(f"Redundant key '{key}' - discarding")
+            continue
 
-	
+        try:
+            quantity = int(quantity_str)
+            inventory[key] = quantity
+        except ValueError as e:
+            print(f"Quantity error for '{key}': {e}")
+
+    if len(inventory) == 0:
+        return
+
+    print(f"Got inventory: {inventory}")
+
+    key_list = list(inventory.keys())
+    print(f"key list: {key_list}")
+
+    total_quantity = sum(inventory.values())
+    print(f"Total quantity of the {len(inventory)} keys: {total_quantity}")
+
+    for key, value in inventory.items():
+        percentage = (value / total_quantity) * 100
+        print(f"key {key} represents {percentage:.1f}%")
+
+    most_abundant_key = None
+    least_abundant_key = None
+
+    for key in key_list:
+        value = inventory[key]
+
+        if most_abundant_key is None or value > inventory[most_abundant_key]:
+            most_abundant_key = key
+
+        if least_abundant_key is None or value < inventory[least_abundant_key]:
+            least_abundant_key = key
+
+    assert most_abundant_key is not None
+    assert least_abundant_key is not None
+
+    print(f"key most abundant: {most_abundant_key} with quantity "
+          f"{inventory[most_abundant_key]}")
+
+    print(f"key least abundant: {least_abundant_key} with quantity "
+          f"{inventory[least_abundant_key]}")
+
+    inventory.update({"magic_key": 1})
+    print(f"Updated inventory: {inventory}")
+
+
+if __name__ == "__main__":
+    main()
