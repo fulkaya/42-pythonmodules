@@ -11,7 +11,7 @@ def main() -> None:
     print("=== Achievement Tracker System ===")
     print()
 
-    master_achievement = [
+    master_achievement: list[str] = [
         "Crafting Genius", "World Savior", "Master Explorer",
         "Collector Supreme", "Untouchable", "Boss Slayer",
         "Unstoppable", "Strategist", "Speed Runner", "Survivor",
@@ -19,15 +19,15 @@ def main() -> None:
         "Hidden Path Finder"
     ]
 
-    alice = gen_player_achievements(master_achievement)
-    bob = gen_player_achievements(master_achievement)
-    charlie = gen_player_achievements(master_achievement)
-    dylan = gen_player_achievements(master_achievement)
+    alice, bob, charlie, dylan = [
+        gen_player_achievements(master_achievement)
+        for _ in range(4)]
 
-    print(f"Player Alice: {alice}")
-    print(f"Player Bob: {bob}")
-    print(f"Player Charlie: {charlie}")
-    print(f"Player Dylan: {dylan}")
+    player_names = ["alice", "bob", "charlie", "dylan"]
+    players = [alice, bob, charlie, dylan]
+
+    for i in range(len(players)):
+        print(f"Player {player_names[i].capitalize()}: {players[i]}")
     print()
 
     all_distinct = alice.union(bob, charlie, dylan)
@@ -38,22 +38,21 @@ def main() -> None:
     print(f"Common achievements: {common}")
     print()
 
-    only_alice = alice.difference(bob.union(charlie, dylan))
-    only_bob = bob.difference(alice.union(charlie, dylan))
-    only_charlie = charlie.difference(alice.union(bob, dylan))
-    only_dylan = dylan.difference(alice.union(bob, charlie))
+    for i in range(len(players)):
+        others: set[str] = set()
 
-    print(f"Only Alice has: {only_alice}")
-    print(f"Only Bob has: {only_bob}")
-    print(f"Only Charlie has: {only_charlie}")
-    print(f"Only Dylan has: {only_dylan}")
+        for j in range(len(players)):
+            if i != j:
+                others = others.union(players[j])
+
+        exclusive = players[i].difference(others)
+        print(f"Only {player_names[i].capitalize()} has: {exclusive}")
     print()
 
     master_set = set(master_achievement)
-    print(f"Alice is missing: {master_set.difference(alice)}")
-    print(f"Bob is missing: {master_set.difference(bob)}")
-    print(f"Charlie is missing: {master_set.difference(charlie)}")
-    print(f"Dylan is missing: {master_set.difference(dylan)}")
+    for i in range(len(players)):
+        print(f"{player_names[i].capitalize()} is missing: "
+              f"{master_set.difference(players[i])}")
 
 
 if __name__ == "__main__":

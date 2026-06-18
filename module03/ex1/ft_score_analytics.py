@@ -31,13 +31,14 @@ def main() -> None:
     low_score = min(valid_scores)
     score_range = high_score - low_score
 
-    print(f"Scores processed: {valid_scores}")
-    print(f"Total players: {total_players}")
-    print(f"Total score: {total_score}")
-    print(f"Average score: {average_score}")
-    print(f"High score: {high_score}")
-    print(f"Low score: {low_score}")
-    print(f"Score range: {score_range}")
+    print(
+        f"Scores processed: {valid_scores}"
+        f"Total players: {total_players}"
+        f"Total score: {total_score}"
+        f"Average score: {average_score}"
+        f"High score: {high_score}"
+        f"Low score: {low_score}"
+        f"Score range: {score_range}")
 
 
 if __name__ == "__main__":
