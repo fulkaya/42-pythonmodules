@@ -7,23 +7,23 @@ def main() -> None:
     inventory = {}
 
     for i in range(1, len(sys.argv)):
-        param = sys.argv[i]
+        arg = sys.argv[i]
 
-        if ":" not in param:
-            print(f"Error - invalid parameter '{param}'")
+        if ":" not in arg:
+            print(f"Error - invalid parameter '{arg}'")
             continue
 
-        parts = param.split(":")
+        parts = arg.split(":")
         key = parts[0].strip()
-        quantity_str = parts[1].strip()
+        value_str = parts[1].strip()
 
         if key in inventory:
-            print(f"Redundant key '{key}' - discarding")
+            print(f"Redundant item '{key}' - discarding")
             continue
 
         try:
-            quantity = int(quantity_str)
-            inventory[key] = quantity
+            value = int(value_str)
+            inventory[key] = value
         except ValueError as e:
             print(f"Quantity error for '{key}': {e}")
 
@@ -33,14 +33,14 @@ def main() -> None:
     print(f"Got inventory: {inventory}")
 
     key_list = list(inventory.keys())
-    print(f"key list: {key_list}")
+    print(f"Item list: {key_list}")
 
     total_quantity = sum(inventory.values())
-    print(f"Total quantity of the {len(inventory)} keys: {total_quantity}")
+    print(f"Total quantity of the {len(inventory)} items: {total_quantity}")
 
     for key, value in inventory.items():
         percentage = (value / total_quantity) * 100
-        print(f"key {key} represents {percentage:.1f}%")
+        print(f"Item {key} represents {percentage:.1f}%")
 
     most_abundant_key = None
     least_abundant_key = None
@@ -57,13 +57,13 @@ def main() -> None:
     assert most_abundant_key is not None
     assert least_abundant_key is not None
 
-    print(f"key most abundant: {most_abundant_key} with quantity "
+    print(f"Item most abundant: {most_abundant_key} with quantity "
           f"{inventory[most_abundant_key]}")
 
-    print(f"key least abundant: {least_abundant_key} with quantity "
+    print(f"Item least abundant: {least_abundant_key} with quantity "
           f"{inventory[least_abundant_key]}")
 
-    inventory.update({"magic_key": 1})
+    inventory.update({"magic_item": 1})
     print(f"Updated inventory: {inventory}")
 
 

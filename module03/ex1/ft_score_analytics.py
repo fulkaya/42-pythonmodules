@@ -32,12 +32,12 @@ def main() -> None:
     score_range = high_score - low_score
 
     print(
-        f"Scores processed: {valid_scores}"
-        f"Total players: {total_players}"
-        f"Total score: {total_score}"
-        f"Average score: {average_score}"
-        f"High score: {high_score}"
-        f"Low score: {low_score}"
+        f"Scores processed: {valid_scores}\n"
+        f"Total players: {total_players}\n"
+        f"Total score: {total_score}\n"
+        f"Average score: {average_score}\n"
+        f"High score: {high_score}\n"
+        f"Low score: {low_score}\n"
         f"Score range: {score_range}")
 
 

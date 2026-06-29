@@ -2,9 +2,9 @@ import random
 
 
 def gen_player_achievements(master_list: list[str]) -> set[str]:
-    num_to_pick = random.randint(5, 9)
-    picked = random.sample(master_list, num_to_pick)
-    return set(picked)
+    num = random.randint(5, 9)
+    my_set = random.sample(master_list, num)
+    return set(my_set)
 
 
 def main() -> None:
@@ -45,8 +45,8 @@ def main() -> None:
             if i != j:
                 others = others.union(players[j])
 
-        exclusive = players[i].difference(others)
-        print(f"Only {player_names[i].capitalize()} has: {exclusive}")
+        just = players[i].difference(others)
+        print(f"Only {player_names[i].capitalize()} has: {just}")
     print()
 
     master_set = set(master_achievement)

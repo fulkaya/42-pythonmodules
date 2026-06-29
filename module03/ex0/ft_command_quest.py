@@ -14,7 +14,7 @@ def main() -> None:
         print(f"Arguments received: {argc_count}")
         for i in range(1, len(sys.argv)):
             print(f"Argument {i}: {sys.argv[i]}")
-        print(f"Total arguments: {len(sys.argv)}")
+    print(f"Total arguments: {len(sys.argv)}")
 
 
 if __name__ == "__main__":

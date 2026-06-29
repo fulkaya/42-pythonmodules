@@ -5,7 +5,7 @@ import typing
 def gen_event() -> typing.Generator[tuple[str, str], None, None]:
     players = ["alice", "bob", "charlie", "dylan"]
     actions = [
-        "run", "eat", "sleep", "grab",
+        "run", "eat", "sleep", "grab", "use",
         "move", "swim", "climb", "release"
     ]
 

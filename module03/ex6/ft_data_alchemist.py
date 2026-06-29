@@ -3,6 +3,7 @@ import random
 
 def main() -> None:
     print("=== Game Data Alchemist ===")
+    print()
 
     initial_players: list[str] = [
         "Alice", "bob", "Charlie", "dylan", "Emma",
