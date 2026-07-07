@@ -29,7 +29,9 @@ def main() -> None:
         print(new_content, end="\n\n")
         print("---")
 
-        new_name = input("Enter new file name (or empty): ")
+        sys.stdout.write("Enter new file name (or empty): ")
+        sys.stdout.flush()
+        new_name = sys.stdin.readline().strip()
         if new_name.strip() == "":
             print("Not saving data.")
         else:
@@ -40,9 +42,10 @@ def main() -> None:
             print(f"Data saved in file '{new_name}'.")
 
     except FileNotFoundError as e:
-        print(f"Error opening file '{sys.argv[1]}': {e}")
+        print(f"[STDERR] Error opening file '{sys.argv[1]}': {e}", file=sys.stderr)
     except PermissionError as e:
-        print(f"Error opening file '{sys.argv[1]}': {e}")
+        print(f"[STDERR] Error opening file '{sys.argv[1]}': {e}", file=sys.stderr)
+
 
 
 if __name__ == "__main__":
