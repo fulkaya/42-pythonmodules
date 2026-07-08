@@ -1,4 +1,5 @@
 import sys
+import typing
 
 
 def main() -> None:
@@ -12,16 +13,14 @@ def main() -> None:
     print(f"Accessing file '{sys.argv[1]}'")
 
     try:
-        file_stream = open(sys.argv[1], "r")
-        content = file_stream.read()
-        file_stream.close()
+        file_object: typing.IO[str] = open(sys.argv[1], "r")
+        content = file_object.read()
+        file_object.close()
         print("---", end="\n\n")
         print(content, end="\n\n")
         print("---")
         print(f"File '{sys.argv[1]}' closed.")
-    except FileNotFoundError as e:
-        print(f"Error opening file '{sys.argv[1]}': {e}")
-    except PermissionError as e:
+    except (FileNotFoundError, PermissionError) as e:
         print(f"Error opening file '{sys.argv[1]}': {e}")
 
 
