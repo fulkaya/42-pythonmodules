@@ -3,6 +3,9 @@ from typing import Any
 
 
 class DataProcessor(ABC):
+    def __init__(self) -> None:
+        self._storage: list[tuple[int, str]] = []
+        self._counter: int = 0
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -21,15 +24,17 @@ class DataProcessor(ABC):
 
 
 class NumericProcessor(DataProcessor):
+
     def __init__(self) -> None:
-        self._storage: list[tuple[int, str]] = []
-        self._counter: int = 0
+        super().__init__()
 
     def validate(self, data: Any) -> bool:
 
         if isinstance(data, (int, float)) and not isinstance(data, bool):
             return True
-        if isinstance(data, list) and data and all(isinstance(x, (int, float)) and not isinstance (x, bool) for x in data):
+        if isinstance(data, list) and data and all(
+          isinstance(x, (int, float)) and not isinstance(x, bool) for x in data
+        ):
             return True
         return False
 
@@ -49,14 +54,15 @@ class NumericProcessor(DataProcessor):
 class TextProcessor(DataProcessor):
 
     def __init__(self) -> None:
-        self._storage: list[tuple[int, str]] = []
-        self._counter: int = 0
+        super().__init__()
 
     def validate(self, data: Any) -> bool:
 
         if isinstance(data, str):
             return True
-        if isinstance(data, list) and data and all(isinstance(x, str) for x in data):
+        if isinstance(data, list) and data and all(
+            isinstance(x, str) for x in data
+        ):
             return True
         return False
 
@@ -76,16 +82,18 @@ class TextProcessor(DataProcessor):
 class LogProcessor(DataProcessor):
 
     def __init__(self) -> None:
-        self._storage: list[tuple[int, str]] = []
-        self._counter: int = 0
+        super().__init__()
 
     def _is_valid_dict(self, d: Any) -> bool:
-        return isinstance(d, dict) and all(isinstance(k, str) and isinstance(v, str) for k, v in d.items())
+        return isinstance(d, dict) and all(
+            isinstance(k, str) and isinstance(v, str) for k, v in d.items())
 
     def validate(self, data: Any) -> bool:
         if self._is_valid_dict(data):
             return True
-        if isinstance(data, list) and data and all(self._is_valid_dict(x) for x in data):
+        if isinstance(data, list) and data and all(
+            self._is_valid_dict(x) for x in data
+        ):
             return True
         return False
 
@@ -109,4 +117,3 @@ class LogProcessor(DataProcessor):
 
 def main() -> None:
     print("=== Code Nexus - Data Processor ===")
-
