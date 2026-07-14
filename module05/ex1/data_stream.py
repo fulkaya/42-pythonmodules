@@ -39,9 +39,9 @@ class NumericProcessor(DataProcessor):
             return True
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(self, data: int | float | list[int | float]) -> None:
         if not self.validate(data):
-            raise ValueError("Improrer numeric data")
+            raise ValueError("Improper numeric data")
 
         if isinstance(data, list):
             for x in data:
@@ -69,7 +69,7 @@ class TextProcessor(DataProcessor):
             return True
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(self, data: str | list[str]) -> None:
         if not self.validate(data):
             raise ValueError("Improper text data")
 
@@ -102,9 +102,9 @@ class LogProcessor(DataProcessor):
             return True
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
         if not self.validate(data):
-            raise ValueError("Improrer log data")
+            raise ValueError("Improper log data")
 
         def format_log(d: dict[str, str]) -> str:
             level = d.get("log_level", "UNKNOWN")
@@ -142,7 +142,7 @@ class DataStream:
                       f"element in stream: {element}")
 
     def print_processors_stats(self) -> None:
-        print("== DataStream statisics ==")
+        print("== DataStream statistics ==")
         if not self.processors:
             print("No processor found, no data")
             return
@@ -157,3 +157,61 @@ class DataStream:
 
 def main() -> None:
     print("=== Code Nexus - Data Stream ===")
+    print()
+
+    print("Initialize Data Stream...")
+    stream = DataStream()
+    stream.print_processors_stats()
+    print()
+
+    print("Registering Numeric Processor")
+    numeric_proc = NumericProcessor()
+    stream.register_processor(numeric_proc)
+
+    first_batch = [
+        'Hello world',
+        [3.14, -1, 2.71],
+        [
+            {'log_level': 'WARNING', 'log_message':
+             'Telnet access! Use ssh instead'},
+            {'log_level': 'INFO', 'log_message': 'User wil is connect'}
+        ],
+        42,
+        ['Hi', 'five']
+    ]
+    print(
+        "Send first batch of data on stream: ['Hello world', "
+        "[3.14, -1, 2.71], [{'log_level': 'WARNING', "
+        "'\nlog_message': 'Telnet access! Use ssh instead'}, "
+        "{'log_level': 'INFO', 'log_message': 'User wil is"
+        "\nconnected'}], 42, ['Hi', 'five']]"
+    )
+
+    stream.process_stream(first_batch)
+    stream.print_processors_stats()
+
+    print()
+    print("Registering other data processors")
+    text_proc = TextProcessor()
+    log_proc = LogProcessor()
+    stream.register_processor(text_proc)
+    stream.register_processor(log_proc)
+
+    print("Send the same batch again")
+    stream.process_stream(first_batch)
+    stream.print_processors_stats()
+
+    print()
+    print("Consume some elements from the data processors: "
+          "Numeric 3, Text 2, Log 1")
+    for _ in range(3):
+        numeric_proc.output()
+    for _ in range(2):
+        text_proc.output()
+    log_proc.output()
+
+    stream.print_processors_stats()
+
+
+if __name__ == "__main__":
+    main()
