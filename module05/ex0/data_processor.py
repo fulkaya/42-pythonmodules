@@ -38,9 +38,9 @@ class NumericProcessor(DataProcessor):
             return True
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(self, data: int | float | list[int | float]) -> None:
         if not self.validate(data):
-            raise ValueError("Improrer numeric data")
+            raise ValueError("Improper numeric data")
 
         if isinstance(data, list):
             for x in data:
@@ -66,7 +66,7 @@ class TextProcessor(DataProcessor):
             return True
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(self, data: str | list[str]) -> None:
         if not self.validate(data):
             raise ValueError("Improper text data")
 
@@ -97,9 +97,9 @@ class LogProcessor(DataProcessor):
             return True
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
         if not self.validate(data):
-            raise ValueError("Improrer log data")
+            raise ValueError("Improper log data")
 
         def format_log(d: dict[str, str]) -> str:
             level = d.get("log_level", "UNKNOWN")
@@ -117,3 +117,49 @@ class LogProcessor(DataProcessor):
 
 def main() -> None:
     print("=== Code Nexus - Data Processor ===")
+    print()
+
+    print("Testing Numeric Processor...")
+    num = NumericProcessor()
+    print(f"Trying to validate input '42': {num.validate(42)}")
+    print(f"Trying to validate input 'Hello': {num.validate('Hello')}")
+    print("Test invalid ingestion of string 'foo' without prior validation:")
+    try:
+        invalid_str = "foo"
+        num.ingest(invalid_str)
+    except ValueError as e:
+        print(f"Got exception: {e}")
+    print("Processing data: [1, 2, 3, 4, 5]")
+    print("Extracting 3 values...")
+    num.ingest([1, 2, 3, 4, 5])
+    for i in range(3):
+        print(f"Numeric value {i}: {num.output()[1]}")
+
+    print()
+    print("Testing Text Processor...")
+    string = TextProcessor()
+    print(f"Trying to validate input '42': {string.validate(42)}")
+    str_list = ['Hello', 'Nexus', 'World']
+    print(f"Processing data: {str_list}")
+    print("Extracting 1 value...")
+    string.ingest(str_list)
+    print(f"Text value 0: {string.output()[1]}")
+
+    print()
+    print("Testing Log Processor...")
+    print()
+    log = LogProcessor()
+    print(f"Trying to validate input 'Hello': {log.validate('Hello')}")
+    dictionary = [
+        {'log_level': 'NOTICE', 'log_message': 'Connection to server'},
+        {'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'}
+    ]
+    print(f"Processing data: {dictionary}")
+    print("Extracting 2 values...")
+    log.ingest(dictionary)
+    for i in range(2):
+        print(f"Log entry {i}: {log.output()[1]}")
+
+
+if __name__ == "__main__":
+    main()
