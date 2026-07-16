@@ -7,6 +7,6 @@ def light_spell_record(spell_name: str, ingredients: str) -> str:
     from alchemy.grimoire.light_validator import validate_ingredients
 
     validator_result: str = validate_ingredients(ingredients)
-    if "VALID" in validator_result:
-        return f"{spell_name} is RECORDED"
-    return f"{spell_name} is REJECTED"
+    if "INVALID" in validator_result:
+        return f"Spell rejected: {spell_name} ({validator_result})"
+    return f"Spell recorded: {spell_name} ({validator_result})"
