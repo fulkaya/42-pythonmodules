@@ -11,7 +11,7 @@ class HealCapability(ABC):
 
 class TransformCapability(ABC):
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.is_transformed = False
 
     @abstractmethod
@@ -25,7 +25,7 @@ class TransformCapability(ABC):
 
 class Sproutling(Creature, HealCapability):
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Sproutling", "Grass")
 
     def attack(self) -> str:
@@ -37,7 +37,7 @@ class Sproutling(Creature, HealCapability):
 
 class Bloomelle(Creature, HealCapability):
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Bloomelle", "Grass/Fairy")
 
     def attack(self) -> str:
@@ -49,7 +49,7 @@ class Bloomelle(Creature, HealCapability):
 
 class Shiftling(Creature, TransformCapability):
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Shiftling", "Normal")
         TransformCapability.__init__(self)
 
@@ -69,7 +69,7 @@ class Shiftling(Creature, TransformCapability):
 
 class Morphagon(Creature, TransformCapability):
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Morphagon", "Normal/Dragon")
         TransformCapability.__init__(self)
 

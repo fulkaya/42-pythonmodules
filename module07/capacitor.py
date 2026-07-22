@@ -6,7 +6,7 @@ healing_factory = HealingCreatureFactory()
 transform_factory = TransformCreatureFactory()
 
 
-def test_factory(factory: CreatureFactory):
+def test_factory(factory: CreatureFactory) -> None:
     creature = factory.create_base()
     evolved = factory.create_evolved()
 
