@@ -11,6 +11,7 @@ def main() -> None:
     current_python = sys.executable
     if not is_in_venv():
         print("MATRIX STATUS: You're still plugged in")
+        print()
         print(f"Current Python: {current_python}")
         print("Virtual Environment: None detected")
         print()
@@ -31,6 +32,7 @@ def main() -> None:
         pkg_path = site_packages[0] if site_packages else "Unknown"
 
         print("MATRIX STATUS: Welcome to the construct")
+        print()
         print(f"Current Python: {current_python}")
         print(f"Virtual Environment: {env_name}")
         print(f"Environment Path: {env_path}")
