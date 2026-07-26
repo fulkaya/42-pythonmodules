@@ -2,9 +2,9 @@ from importlib.metadata import version
 import sys
 
 try:
-    import pandas as pd  # type: ignore
-    import numpy as np  # type: ignore
-    import matplotlib.pyplot as plt  # type: ignore
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
     HAS_DEPENDENCIES = True
 except ImportError as e:
     HAS_DEPENDENCIES = False
